@@ -19,8 +19,6 @@ class Stack {
     this.top = newNode;
   }
   pop() {
-    //The top's pointer should point to the node beneath it
-    //So we will just make the this.top equal to the node beneath the current top
     const node = this.top;
     this.top = node.next;
     return node.value;
@@ -121,4 +119,64 @@ function isMissingExpression(string) {
   }
   return 'Expression seems correct!';
 }
-console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
+// console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
+
+//5. Sort stack
+function exampleStack() {
+  let stack = new Stack();
+  stack.push(2);
+  stack.push(1);
+  stack.push(3);
+  stack.push(5);
+
+  // 5 > 3 > 1 > 2
+  // 1 > 2 > 3 > 5
+
+  return stack;
+}
+
+function sortStack(stack) {
+  let holder;
+  let tempStack = new Stack();
+
+  if(isEmpty(tempStack)) {
+    tempStack.push(stack.pop());
+  }
+
+  let currNode = stack.top; // 3
+  while(currNode !== null && currNode.next !== null) {
+    if(currNode.value < peek(tempStack).value) { 3 < 5
+      holder = tempStack.pop(); // 5
+      tempStack.push(stack.pop()); //3
+      tempStack.push(holder); // 5
+      // tempStack.push(stack.pop()) //5 is back to tempStack
+      // currNode = currNode.next;
+    }
+    currNode = currNode.next;
+  }
+  return JSON.stringify(tempStack);
+}
+// console.log(sortStack(exampleStack()));
+
+// while(currNode !== null && currNode.next !== null) {
+//   if(currNode.value < peek(tempStack).value) { 
+//     holder = tempStack.pop();
+//     tempStack.push(stack.pop());
+//     stack.push(holder); 
+//   } else {
+//     tempStack.push(stack.pop())
+//   }
+//   currNode = currNode.next;
+// }
+
+// Step 1: 5 > 3 > 1 > 2
+// Stack = 3 > 1 > 2       Temp = 5
+
+// Step 2: 3 < 5 YES IT IS
+// Holder = 5    Temp = 3    Stack = 5 > 1 > 2
+
+// Step 3: 5 < 3 FALSE
+// Holder is empty   Temp = 5 > 3    Stack = 1 > 2
+
+// Step 4: 1 < 5 YES IT IS
+// Holder = 5  
