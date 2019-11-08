@@ -1,5 +1,6 @@
+// 1. Create a stack class
 class _Node {
-  constructor(value,next) {
+  constructor(value, next) {
     this.value = value;
     this.next = next;
   }
@@ -10,7 +11,7 @@ class Stack {
     this.top = null;
   }
   push(value) {
-    if(this.top === null) {
+    if (this.top === null) {
       this.top = new _Node(value, null);
       return this.top;
     }
@@ -50,7 +51,7 @@ function peek(stack) {
 
 function isEmpty(stack) {
   let top = stack.top;
-  if(top === null) {
+  if (top === null) {
     return true;
   }
   return false;
@@ -72,15 +73,15 @@ function is_palindrome(string) {
   string = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
   let palindromeStack = new Stack();
   let top = palindromeStack.top;
-  for(let i = 0; i < string.length; i++) {
+  for (let i = 0; i < string.length; i++) {
     palindromeStack.push(string[i]);
     top++;
   }
   let reverseString = '';
-  for(let i = 0; i < top; i++) {
+  for (let i = 0; i < top; i++) {
     reverseString += palindromeStack.pop();
   }
-  if(reverseString === string) {
+  if (reverseString === string) {
     return true;
   }
   return false;
@@ -93,3 +94,31 @@ function is_palindrome(string) {
 
 
 //4. Matching parentheses in an expression
+function isMissingExpression(string) {
+  let stack = new Stack();
+  let top = 0;
+  for (let i = 0; i < string.length; i++) {
+    stack.push(string[i]);
+    top++;
+  }
+  let countOpen = 0;
+  let countClose = 0;
+  let holder = '';
+  for (let i = 0; i < top; i++) {
+    holder = stack.pop();
+    if (holder === '(') {
+      countOpen++;
+    } else if (holder === ')') {
+      countClose++;
+    }
+  }
+  if (countOpen !== countClose) {
+    if (countOpen % 2 === 1) {
+      return `You are missing a '('`;
+    } else if (countClose % 2 === 1) {
+      return `You are missing a ')'`;
+    }
+  }
+  return 'Expression seems correct!';
+}
+console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
