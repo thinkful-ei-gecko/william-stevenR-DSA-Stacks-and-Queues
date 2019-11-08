@@ -15,10 +15,12 @@ class Stack {
       this.top = new _Node(value, null);
       return this.top;
     }
-    let newNode = new _Node(value, this.top)
+    let newNode = new _Node(value, this.top);
     this.top = newNode;
   }
   pop() {
+    //The top's pointer should point to the node beneath it
+    //So we will just make the this.top equal to the node beneath the current top
     const node = this.top;
     this.top = node.next;
     return node.value;
@@ -39,7 +41,6 @@ function main() {
 }
 // console.log(JSON.stringify(main()));
 
-
 //2. Useful methods for a stack
 function peek(stack) {
   let top = stack.top;
@@ -59,16 +60,15 @@ function isEmpty(stack) {
 function display(stack) {
   console.log(JSON.stringify(stack));
 }
-// display(main()); 
+// display(main());
 // The first item in our stack is the item on the bottom, which is 'Kirk'
 /* To get rid of McCoy from our stack, we would need to perform two pop()
    methods. This is because items from the stack can only be removed one at a time
    from the top */
 
-
 //3. Check for palindromes using a stack
 function is_palindrome(string) {
-  string = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+  string = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
   let palindromeStack = new Stack();
   let top = palindromeStack.top;
   for (let i = 0; i < string.length; i++) {
@@ -89,7 +89,6 @@ function is_palindrome(string) {
 // console.log(is_palindrome("A man, a plan, a canal: Panama"));
 // console.log(is_palindrome("1001"));
 // console.log(is_palindrome("Tauhida"));
-
 
 //4. Matching parentheses in an expression
 function isMissingExpression(string) {
@@ -119,64 +118,54 @@ function isMissingExpression(string) {
   }
   return 'Expression seems correct!';
 }
-// console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
+console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
 
-//5. Sort stack
-function exampleStack() {
+function testStack() {
   let stack = new Stack();
-  stack.push(2);
   stack.push(1);
+  stack.push(2);
   stack.push(3);
-  stack.push(5);
-
-  // 5 > 3 > 1 > 2
-  // 1 > 2 > 3 > 5
 
   return stack;
 }
 
-function sortStack(stack) {
-  let holder;
-  let tempStack = new Stack();
+function sort(stack) {
+  let result = new Stack();
+  let currNode = stack.top;
+  let currHigh = 0;
 
-  if(isEmpty(tempStack)) {
-    tempStack.push(stack.pop());
-  }
-
-  let currNode = stack.top; // 3
-  while(currNode !== null && currNode.next !== null) {
-    if(currNode.value < peek(tempStack).value) { 3 < 5
-      holder = tempStack.pop(); // 5
-      tempStack.push(stack.pop()); //3
-      tempStack.push(holder); // 5
-      // tempStack.push(stack.pop()) //5 is back to tempStack
-      // currNode = currNode.next;
+  while (currNode !== null) {
+    if (currNode.value > currHigh) {
+      currHigh = currNode.value;
+      console.log(currHigh);
     }
     currNode = currNode.next;
   }
-  return JSON.stringify(tempStack);
+  return currHigh;
 }
-// console.log(sortStack(exampleStack()));
 
-// while(currNode !== null && currNode.next !== null) {
-//   if(currNode.value < peek(tempStack).value) { 
-//     holder = tempStack.pop();
-//     tempStack.push(stack.pop());
-//     stack.push(holder); 
-//   } else {
-//     tempStack.push(stack.pop())
-//   }
-//   currNode = currNode.next;
-// }
+sort(testStack());
 
-// Step 1: 5 > 3 > 1 > 2
-// Stack = 3 > 1 > 2       Temp = 5
+//Stack Queue
 
-// Step 2: 3 < 5 YES IT IS
-// Holder = 5    Temp = 3    Stack = 5 > 1 > 2
+function stackQueue() {
+  const enqStack = new Stack();
+  const dqStack = new Stack();
 
-// Step 3: 5 < 3 FALSE
-// Holder is empty   Temp = 5 > 3    Stack = 1 > 2
+  enqStack.push('1');
+  enqStack.push('2');
+  enqStack.push('3');
+  enqStack.push('4');
 
-// Step 4: 1 < 5 YES IT IS
-// Holder = 5  
+  let top = enqStack.top;
+  while (top !== null) {
+    if (enqStack.top !== null) {
+      dqStack.push(enqStack.pop());
+    }
+    top = top.next;
+  }
+
+  return dqStack;
+}
+
+console.log(JSON.stringify(stackQueue()));
