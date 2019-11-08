@@ -68,3 +68,28 @@ function display(stack) {
 
 
 //3. Check for palindromes using a stack
+function is_palindrome(string) {
+  string = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+  let palindromeStack = new Stack();
+  let top = palindromeStack.top;
+  for(let i = 0; i < string.length; i++) {
+    palindromeStack.push(string[i]);
+    top++;
+  }
+  let reverseString = '';
+  for(let i = 0; i < top; i++) {
+    reverseString += palindromeStack.pop();
+  }
+  if(reverseString === string) {
+    return true;
+  }
+  return false;
+}
+// True, true, true, false
+// console.log(is_palindrome("dad"));
+// console.log(is_palindrome("A man, a plan, a canal: Panama"));
+// console.log(is_palindrome("1001"));
+// console.log(is_palindrome("Tauhida"));
+
+
+//4. Matching parentheses in an expression
