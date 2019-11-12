@@ -158,4 +158,23 @@ function squareDance() {
   return JSON.stringify(female);
 }
 
-console.log(squareDance());
+// console.log(squareDance());
+
+
+function ophidianBank() {
+  const queue = new Queue();
+  
+  for(let i = 0; i < 100; i++) {
+    queue.enqueue(i);
+    const person = queue.enqueue;
+
+    if(Math.random() < 0.25) {
+      queue.enqueue(person);
+    } else {
+      queue.dequeue();
+    }
+  }
+  return queue;
+}
+
+console.log(ophidianBank());

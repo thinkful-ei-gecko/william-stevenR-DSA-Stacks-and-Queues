@@ -118,7 +118,7 @@ function isMissingExpression(string) {
   }
   return 'Expression seems correct!';
 }
-console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
+// console.log(isMissingExpression('2 * ( 3 * (a + b) )'));
 
 function testStack() {
   let stack = new Stack();
@@ -130,21 +130,20 @@ function testStack() {
 }
 
 function sort(stack) {
-  let result = new Stack();
-  let currNode = stack.top;
-  let currHigh = 0;
-
-  while (currNode !== null) {
-    if (currNode.value > currHigh) {
-      currHigh = currNode.value;
-      console.log(currHigh);
+  let newStack = new Stack();
+  while(!isEmpty(stack)) {
+    let holder = stack.pop();
+    while(!isEmpty(newStack) && (peek(newStack) > holder)) {
+      stack.push(newStack.pop());
     }
-    currNode = currNode.next;
+    newStack.push(holder);
   }
-  return currHigh;
+  while(!isEmpty(newStack)) {
+    stack.push(newStack.pop());
+  }
+  return stack;
 }
-
-sort(testStack());
+console.log(JSON.stringify(sort(testStack())));
 
 //Stack Queue
 
@@ -167,5 +166,4 @@ function stackQueue() {
 
   return dqStack;
 }
-
-console.log(JSON.stringify(stackQueue()));
+// console.log(JSON.stringify(stackQueue()));
